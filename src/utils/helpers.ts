@@ -5,23 +5,32 @@ interface ICommandOptions {
   logging?: boolean;
   stdio?: 'inherit' | 'pipe' | 'ignore';
   continueOnError?: boolean;
+  showSeparators?: boolean;
 }
 
-export function runCommand(command: string, { logging = true, continueOnError = false, ...options }: ICommandOptions = { stdio: 'inherit' }): void {
+export function runCommand(command: string, { logging = true, continueOnError = false, showSeparators = true, ...options }: ICommandOptions = { stdio: 'inherit' }): void {
   try {
     // Display command being executed with clear formatting
-    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
-    if (logging) {
-      console.log(`${colors.cyan}$${colors.reset} ${colors.bold}${command}${colors.reset}`);
-    } else {
-      console.log(`${colors.cyan}$${colors.reset} ${colors.bold}[REDACTED]${colors.reset}`);
+    if (showSeparators) {
+      console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
     }
-    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    if (logging) {
+      const prefix = showSeparators ? `${colors.cyan}$${colors.reset}` : `  ${colors.cyan}$${colors.reset}`;
+      console.log(`${prefix} ${colors.bold}${command}${colors.reset}`);
+    } else {
+      const prefix = showSeparators ? `${colors.cyan}$${colors.reset}` : `  ${colors.cyan}$${colors.reset}`;
+      console.log(`${prefix} ${colors.bold}[REDACTED]${colors.reset}`);
+    }
+    if (showSeparators) {
+      console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    }
 
     execSync(command, { stdio: 'inherit', ...options });
     
     // Add spacing after command output
-    console.log('');
+    if (showSeparators) {
+      console.log('');
+    }
   } catch (error) {
     console.log('');
     console.error(`${colors.red}✗ Error executing command:${colors.reset}`, logging ? command : '[REDACTED]');

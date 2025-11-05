@@ -41,7 +41,7 @@ export async function destroyProject({ projectName, owner }: IDestroyArgs): Prom
     console.log(`✓ Found directory "${projectName}"`);
     const shouldRemove = await confirm(`Directory "${projectName}" exists, do you want to remove it?`);
     if (shouldRemove) {
-      runCommand(`rm -rf ${projectName}`);
+      runCommand(`rm -rf ${projectName}`, { showSeparators: false });
       console.log('');
       console.log(`✓ Removed "${projectName}".`);
     } else {
