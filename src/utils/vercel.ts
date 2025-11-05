@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import dotenv from 'dotenv';
+import { colors } from './colors.js';
 
 dotenv.config();
 
@@ -66,7 +67,12 @@ export async function createVercelProject(repoName: string): Promise<IVercelProj
 
     const { data } = await axiosInstance.post<IVercelProject>(apiUrl, projectConfig);
 
-    console.log(`Project '${data.id}' with repo id '${data.link.repoId}' created successfully on Vercel.`);
+    // Format output similar to command output
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.cyan}$${colors.reset} ${colors.bold}vercel project create${colors.reset}`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`✓ Project '${data.id}' with repo id '${data.link.repoId}' created successfully on Vercel.`);
+    console.log('');
     return data;
   } catch (error) {
     if (error instanceof AxiosError && error.response?.data) {
@@ -83,7 +89,11 @@ export async function assignDomain(projectId: string, domain: string): Promise<v
 
   try {
     await axiosInstance.post(apiUrl, { name: domain });
-    console.log(`Domain ${domain} added successfully`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.cyan}$${colors.reset} ${colors.bold}vercel domain add${colors.reset}`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`✓ Domain ${domain} added successfully`);
+    console.log('');
   } catch (error) {
     if (error instanceof AxiosError && error.response?.data) {
       console.error('Error adding domain:', error.response.data);
@@ -114,7 +124,11 @@ export async function addEnvironmentVariable(
       }
     );
 
-    console.log(`Environment variable ${key} added successfully.`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.cyan}$${colors.reset} ${colors.bold}vercel env add${colors.reset}`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`✓ Environment variable ${key} added successfully.`);
+    console.log('');
   } catch (error) {
     if (error instanceof AxiosError && error.response?.data) {
       const errorData = error.response.data as IVercelError;
@@ -140,7 +154,11 @@ export async function triggerDeployment(repoName: string, repoId: string): Promi
       target: 'production',
     });
 
-    console.log(`Deployment triggered successfully to: https://${data.alias[0]}`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.cyan}$${colors.reset} ${colors.bold}vercel deploy${colors.reset}`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`✓ Deployment triggered successfully to: https://${data.alias[0]}`);
+    console.log('');
   } catch (error) {
     if (error instanceof AxiosError) {
       console.error('Error triggering deployment:', error.response?.statusText || error.message);

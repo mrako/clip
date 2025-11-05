@@ -73,7 +73,8 @@ describe('Destroy Command', () => {
     expect(mockExistsSync).toHaveBeenCalledWith('test-project');
     expect(mockQuestion).toHaveBeenCalled();
     expect(executedCommands).toContain('rm -rf test-project');
-    expect(console.log).toHaveBeenCalledWith('Removed "test-project".');
+    expect(console.log).toHaveBeenCalledWith('✓ Found directory "test-project"');
+    expect(console.log).toHaveBeenCalledWith('✓ Removed "test-project".');
   });
 
   it('should not remove local directory when it exists but user declines', async () => {
@@ -159,6 +160,7 @@ describe('Destroy Command', () => {
     expect(executedCommands).toContain('gh repo delete mrako/test-project --yes');
     expect(executedCommands).toContain('vercel project rm test-project --scope team_123');
     expect(executedCommands).toContain('rm -rf test-project');
-    expect(console.log).toHaveBeenCalledWith('Removed "test-project".');
+    expect(console.log).toHaveBeenCalledWith('✓ Found directory "test-project"');
+    expect(console.log).toHaveBeenCalledWith('✓ Removed "test-project".');
   });
 });
