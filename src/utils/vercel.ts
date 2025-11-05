@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import dotenv from 'dotenv';
+import { colors } from './colors.js';
 
 dotenv.config();
 
@@ -51,6 +52,10 @@ export async function createVercelProject(repoName: string): Promise<IVercelProj
   const projectName = repoName.split('/')[1];
   const apiUrl = `https://api.vercel.com/v9/projects?teamId=${VERCEL_SCOPE}`;
 
+  console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+  console.log(`${colors.cyan}$${colors.reset} ${colors.bold}vercel project create${colors.reset}`);
+  console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+
   try {
     const projectConfig: any = {
       gitRepository: {
@@ -66,14 +71,14 @@ export async function createVercelProject(repoName: string): Promise<IVercelProj
 
     const { data } = await axiosInstance.post<IVercelProject>(apiUrl, projectConfig);
 
-    console.log(`Project '${data.id}' with repo id '${data.link.repoId}' created successfully on Vercel.`);
+    console.log(`✓ Project '${data.id}' with repo id '${data.link.repoId}' created successfully on Vercel.`);
     return data;
   } catch (error) {
     if (error instanceof AxiosError && error.response?.data) {
       const errorData = error.response.data as IVercelError;
-      console.error('Error creating Vercel project:', errorData.error.message);
+      console.error('✗ Error creating Vercel project:', errorData.error.message);
     } else {
-      console.error('Error creating Vercel project:', (error as Error).message);
+      console.error('✗ Error creating Vercel project:', (error as Error).message);
     }
   }
 }
@@ -83,12 +88,12 @@ export async function assignDomain(projectId: string, domain: string): Promise<v
 
   try {
     await axiosInstance.post(apiUrl, { name: domain });
-    console.log(`Domain ${domain} added successfully`);
+    console.log(`✓ Domain ${domain} added successfully`);
   } catch (error) {
     if (error instanceof AxiosError && error.response?.data) {
-      console.error('Error adding domain:', error.response.data);
+      console.error('✗ Error adding domain:', error.response.data);
     } else {
-      console.error('Error adding domain:', (error as Error).message);
+      console.error('✗ Error adding domain:', (error as Error).message);
     }
   }
 }
@@ -114,13 +119,13 @@ export async function addEnvironmentVariable(
       }
     );
 
-    console.log(`Environment variable ${key} added successfully.`);
+    console.log(`✓ Environment variable ${key} added successfully.`);
   } catch (error) {
     if (error instanceof AxiosError && error.response?.data) {
       const errorData = error.response.data as IVercelError;
-      console.error('Error adding environment variable:', errorData.error.message);
+      console.error('✗ Error adding environment variable:', errorData.error.message);
     } else {
-      console.error('Error adding environment variable:', (error as Error).message);
+      console.error('✗ Error adding environment variable:', (error as Error).message);
     }
   }
 }
@@ -140,12 +145,17 @@ export async function triggerDeployment(repoName: string, repoId: string): Promi
       target: 'production',
     });
 
-    console.log(`Deployment triggered successfully to: https://${data.alias[0]}`);
+    console.log(`✓ Deployment triggered successfully:`);
+    if (Array.isArray(data.alias) && data.alias.length > 0) {
+      data.alias.forEach((a: string) => console.log(`  - https://${a}`));
+    } else {
+      console.log('  - (no aliases returned)');
+    }
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error('Error triggering deployment:', error.response?.statusText || error.message);
+      console.error('✗ Error triggering deployment:', error.response?.statusText || error.message);
     } else {
-      console.error('Error triggering deployment:', (error as Error).message);
+      console.error('✗ Error triggering deployment:', (error as Error).message);
     }
   }
 }

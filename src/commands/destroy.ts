@@ -1,8 +1,10 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import readline from 'readline';
+import { execSync } from 'child_process';
 
 import { runCommand } from '../utils/helpers.js';
+import { colors } from '../utils/colors.js';
 
 dotenv.config();
 
@@ -19,7 +21,8 @@ async function confirm(prompt: string): Promise<boolean> {
     output: process.stdout,
   });
   return new Promise((resolve) => {
-    rl.question(`${prompt} (y/N): `, (answer) => {
+    // Use red text for the question, matching Vercel CLI style
+    rl.question(`${colors.red}⚠  ${prompt} [y/N]: ${colors.reset}`, (answer) => {
       rl.close();
       resolve(answer.toLowerCase() === 'y');
     });
@@ -33,10 +36,17 @@ export async function destroyProject({ projectName, owner }: IDestroyArgs): Prom
   }
 
   if (fs.existsSync(projectName)) {
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.cyan}$${colors.reset} ${colors.bold}Removing local directory${colors.reset}`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`✓ Found directory "${projectName}"`);
     const shouldRemove = await confirm(`Directory "${projectName}" exists, do you want to remove it?`);
     if (shouldRemove) {
-      runCommand(`rm -rf ${projectName}`);
-      console.log(`Removed "${projectName}".`);
+      // Show the rm command as an indented subcommand
+      console.log(`  ${colors.cyan}$${colors.reset} ${colors.bold}rm -rf ${projectName}${colors.reset}`);
+      execSync(`rm -rf ${projectName}`, { stdio: 'inherit' });
+      console.log('');
+      console.log(`✓ Removed "${projectName}".`);
     } else {
       console.log('Skipped directory removal.');
     }
