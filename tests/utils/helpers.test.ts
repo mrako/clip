@@ -29,7 +29,9 @@ describe('runCommand', () => {
     runCommand('test command');
 
     expect(mockExecSync).toHaveBeenCalledWith('test command', { stdio: 'inherit' });
-    expect(mockConsoleLog).toHaveBeenCalledWith('Running command: test command');
+    // Verify that the command is logged with proper formatting (separators, $ prefix, and command text)
+    expect(mockConsoleLog).toHaveBeenCalledWith(expect.stringContaining('─'.repeat(80)));
+    expect(mockConsoleLog).toHaveBeenCalledWith(expect.stringMatching(/\$.*test command/));
   });
 
   it('should exit process when command fails and continueOnError is false', () => {
@@ -41,9 +43,13 @@ describe('runCommand', () => {
       runCommand('failing command');
     }).toThrow('process.exit called');
 
+    // Verify error message includes the ✗ symbol and command name
     expect(mockConsoleError).toHaveBeenCalledWith(
-      'Error executing command: failing command',
-      'Command failed'
+      expect.stringContaining('✗ Error executing command:'),
+      'failing command'
+    );
+    expect(mockConsoleError).toHaveBeenCalledWith(
+      expect.stringContaining('Command failed')
     );
     expect(mockProcessExit).toHaveBeenCalledWith(1);
   });
@@ -55,9 +61,13 @@ describe('runCommand', () => {
 
     runCommand('failing command', { continueOnError: true });
 
+    // Verify error message includes the ✗ symbol and command name
     expect(mockConsoleError).toHaveBeenCalledWith(
-      'Error executing command: failing command',
-      'Command failed'
+      expect.stringContaining('✗ Error executing command:'),
+      'failing command'
+    );
+    expect(mockConsoleError).toHaveBeenCalledWith(
+      expect.stringContaining('Command failed')
     );
     expect(mockProcessExit).not.toHaveBeenCalled();
   });
@@ -67,6 +77,8 @@ describe('runCommand', () => {
 
     runCommand('secret command', { logging: false });
 
-    expect(mockConsoleLog).toHaveBeenCalledWith('Running command: [REDACTED]');
+    // Verify command is redacted
+    expect(mockConsoleLog).toHaveBeenCalledWith(expect.stringContaining('[REDACTED]'));
+    expect(mockConsoleLog).not.toHaveBeenCalledWith(expect.stringContaining('secret command'));
   });
 });

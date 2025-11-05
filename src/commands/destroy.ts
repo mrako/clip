@@ -6,6 +6,13 @@ import { runCommand } from '../utils/helpers.js';
 
 dotenv.config();
 
+// ANSI color codes for terminal formatting
+const colors = {
+  yellow: '\x1b[33m',
+  bold: '\x1b[1m',
+  reset: '\x1b[0m',
+};
+
 export interface IDestroyArgs {
   projectName: string;
   owner: string;
@@ -19,7 +26,12 @@ async function confirm(prompt: string): Promise<boolean> {
     output: process.stdout,
   });
   return new Promise((resolve) => {
-    rl.question(`${prompt} (y/N): `, (answer) => {
+    console.log('');
+    console.log(`${colors.yellow}${'━'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.yellow}⚠${colors.reset}  ${colors.bold}${colors.yellow}${prompt}${colors.reset}`);
+    rl.question(`${colors.yellow}  [y/N]: ${colors.reset}`, (answer) => {
+      console.log(`${colors.yellow}${'━'.repeat(80)}${colors.reset}`);
+      console.log('');
       rl.close();
       resolve(answer.toLowerCase() === 'y');
     });
