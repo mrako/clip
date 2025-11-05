@@ -20,7 +20,8 @@ async function confirm(prompt: string): Promise<boolean> {
     output: process.stdout,
   });
   return new Promise((resolve) => {
-    rl.question(`${colors.yellow}⚠${colors.reset}  ${colors.bold}${colors.yellow}${prompt}${colors.reset} (y/N): ${colors.reset}`, (answer) => {
+    // Use red text for the question, matching Vercel CLI style
+    rl.question(`${colors.red}⚠  ${prompt} [y/N]: ${colors.reset}`, (answer) => {
       rl.close();
       resolve(answer.toLowerCase() === 'y');
     });
@@ -41,6 +42,7 @@ export async function destroyProject({ projectName, owner }: IDestroyArgs): Prom
     const shouldRemove = await confirm(`Directory "${projectName}" exists, do you want to remove it?`);
     if (shouldRemove) {
       runCommand(`rm -rf ${projectName}`);
+      console.log('');
       console.log(`✓ Removed "${projectName}".`);
     } else {
       console.log('Skipped directory removal.');
