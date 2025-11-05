@@ -106,4 +106,59 @@ describe('Destroy Command', () => {
     expect(mockQuestion).not.toHaveBeenCalled();
     expect(executedCommands).not.toContain('rm -rf test-project');
   });
+
+  it('should continue when GitHub repository delete fails', async () => {
+    // Mock runCommand to track execution without throwing
+    mockRunCommand.mockImplementation((command) => {
+      executedCommands.push(command);
+    });
+
+    await destroyProject({
+      projectName: 'test-project',
+      owner: 'mrako'
+    });
+
+    // Verify both commands were attempted
+    expect(executedCommands).toContain('gh repo delete mrako/test-project --yes');
+    expect(executedCommands).toContain('vercel project rm test-project --scope team_123');
+  });
+
+  it('should continue when Vercel project delete fails', async () => {
+    // Mock runCommand to track execution without throwing
+    mockRunCommand.mockImplementation((command) => {
+      executedCommands.push(command);
+    });
+
+    await destroyProject({
+      projectName: 'test-project',
+      owner: 'mrako'
+    });
+
+    // Verify both commands were attempted
+    expect(executedCommands).toContain('gh repo delete mrako/test-project --yes');
+    expect(executedCommands).toContain('vercel project rm test-project --scope team_123');
+  });
+
+  it('should continue to directory cleanup even when both GitHub and Vercel operations fail', async () => {
+    // Mock runCommand to track execution without throwing
+    mockRunCommand.mockImplementation((command) => {
+      executedCommands.push(command);
+    });
+    mockExistsSync.mockReturnValue(true);
+    mockQuestion.mockImplementation((...args: any[]) => {
+      const callback = args[1] as (answer: string) => void;
+      callback('y');
+    });
+
+    await destroyProject({
+      projectName: 'test-project',
+      owner: 'mrako'
+    });
+
+    // Verify all commands were attempted including directory removal
+    expect(executedCommands).toContain('gh repo delete mrako/test-project --yes');
+    expect(executedCommands).toContain('vercel project rm test-project --scope team_123');
+    expect(executedCommands).toContain('rm -rf test-project');
+    expect(console.log).toHaveBeenCalledWith('Removed "test-project".');
+  });
 });

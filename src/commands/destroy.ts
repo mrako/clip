@@ -27,9 +27,9 @@ async function confirm(prompt: string): Promise<boolean> {
 }
 
 export async function destroyProject({ projectName, owner }: IDestroyArgs): Promise<void> {
-  runCommand(`gh repo delete ${owner}/${projectName} --yes`);
+  runCommand(`gh repo delete ${owner}/${projectName} --yes`, { continueOnError: true });
   if (VERCEL_SCOPE) {
-    runCommand(`vercel project rm ${projectName} --scope ${VERCEL_SCOPE}`);
+    runCommand(`vercel project rm ${projectName} --scope ${VERCEL_SCOPE}`, { continueOnError: true });
   }
 
   if (fs.existsSync(projectName)) {
