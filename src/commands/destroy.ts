@@ -1,5 +1,8 @@
-import { runCommand } from '../utils/helpers.js';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import readline from 'readline';
+
+import { runCommand } from '../utils/helpers.js';
 
 dotenv.config();
 
@@ -10,9 +13,32 @@ export interface IDestroyArgs {
 
 const VERCEL_SCOPE = process.env.VERCEL_SCOPE;
 
+async function confirm(prompt: string): Promise<boolean> {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  return new Promise((resolve) => {
+    rl.question(`${prompt} (y/N): `, (answer) => {
+      rl.close();
+      resolve(answer.toLowerCase() === 'y');
+    });
+  });
+}
+
 export async function destroyProject({ projectName, owner }: IDestroyArgs): Promise<void> {
   runCommand(`gh repo delete ${owner}/${projectName} --yes`);
   if (VERCEL_SCOPE) {
     runCommand(`vercel project rm ${projectName} --scope ${VERCEL_SCOPE}`);
+  }
+
+  if (fs.existsSync(projectName)) {
+    const shouldRemove = await confirm(`Directory "${projectName}" exists, do you want to remove it?`);
+    if (shouldRemove) {
+      runCommand(`rm -rf ${projectName}`);
+      console.log(`Removed "${projectName}".`);
+    } else {
+      console.log('Skipped directory removal.');
+    }
   }
 }
