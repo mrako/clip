@@ -1,20 +1,11 @@
 import { execSync } from 'child_process';
+import { colors } from './colors.js';
 
 interface ICommandOptions {
   logging?: boolean;
   stdio?: 'inherit' | 'pipe' | 'ignore';
   continueOnError?: boolean;
 }
-
-// ANSI color codes for terminal formatting
-const colors = {
-  cyan: '\x1b[36m',
-  bold: '\x1b[1m',
-  dim: '\x1b[2m',
-  yellow: '\x1b[33m',
-  red: '\x1b[31m',
-  reset: '\x1b[0m',
-};
 
 export function runCommand(command: string, { logging = true, continueOnError = false, ...options }: ICommandOptions = { stdio: 'inherit' }): void {
   try {

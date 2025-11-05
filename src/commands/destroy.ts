@@ -3,15 +3,9 @@ import fs from 'fs';
 import readline from 'readline';
 
 import { runCommand } from '../utils/helpers.js';
+import { colors } from '../utils/colors.js';
 
 dotenv.config();
-
-// ANSI color codes for terminal formatting
-const colors = {
-  yellow: '\x1b[33m',
-  bold: '\x1b[1m',
-  reset: '\x1b[0m',
-};
 
 export interface IDestroyArgs {
   projectName: string;
