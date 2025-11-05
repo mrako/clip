@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 import { destroyProject } from '../../src/commands/destroy.js';
 import { runCommand } from '../../src/utils/helpers.js';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import readline from 'readline';
 
@@ -8,12 +9,15 @@ jest.mock('../../src/utils/helpers.js', () => ({
   runCommand: jest.fn()
 }));
 
+jest.mock('child_process');
+
 jest.mock('fs');
 
 jest.mock('readline');
 
 describe('Destroy Command', () => {
   const mockRunCommand = runCommand as jest.MockedFunction<typeof runCommand>;
+  const mockExecSync = execSync as jest.MockedFunction<typeof execSync>;
   const mockExistsSync = fs.existsSync as jest.MockedFunction<typeof fs.existsSync>;
   const mockCreateInterface = readline.createInterface as jest.MockedFunction<typeof readline.createInterface>;
   const executedCommands: string[] = [];
@@ -25,6 +29,12 @@ describe('Destroy Command', () => {
     executedCommands.length = 0;
     mockRunCommand.mockImplementation((command) => {
       executedCommands.push(command);
+    });
+    mockExecSync.mockImplementation((command: string) => {
+      if (command.startsWith('rm -rf')) {
+        executedCommands.push(command);
+      }
+      return Buffer.from('') as any;
     });
 
     // Setup readline mock

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import readline from 'readline';
+import { execSync } from 'child_process';
 
 import { runCommand } from '../utils/helpers.js';
 import { colors } from '../utils/colors.js';
@@ -41,7 +42,9 @@ export async function destroyProject({ projectName, owner }: IDestroyArgs): Prom
     console.log(`✓ Found directory "${projectName}"`);
     const shouldRemove = await confirm(`Directory "${projectName}" exists, do you want to remove it?`);
     if (shouldRemove) {
-      runCommand(`rm -rf ${projectName}`, { showSeparators: false });
+      // Show the rm command as an indented subcommand
+      console.log(`  ${colors.cyan}$${colors.reset} ${colors.bold}rm -rf ${projectName}${colors.reset}`);
+      execSync(`rm -rf ${projectName}`, { stdio: 'inherit' });
       console.log('');
       console.log(`✓ Removed "${projectName}".`);
     } else {
