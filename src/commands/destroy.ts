@@ -20,12 +20,7 @@ async function confirm(prompt: string): Promise<boolean> {
     output: process.stdout,
   });
   return new Promise((resolve) => {
-    console.log('');
-    console.log(`${colors.yellow}${'━'.repeat(80)}${colors.reset}`);
-    console.log(`${colors.yellow}⚠${colors.reset}  ${colors.bold}${colors.yellow}${prompt}${colors.reset}`);
-    rl.question(`${colors.yellow}  [y/N]: ${colors.reset}`, (answer) => {
-      console.log(`${colors.yellow}${'━'.repeat(80)}${colors.reset}`);
-      console.log('');
+    rl.question(`${colors.yellow}⚠${colors.reset}  ${colors.bold}${colors.yellow}${prompt}${colors.reset} (y/N): ${colors.reset}`, (answer) => {
       rl.close();
       resolve(answer.toLowerCase() === 'y');
     });
@@ -39,7 +34,6 @@ export async function destroyProject({ projectName, owner }: IDestroyArgs): Prom
   }
 
   if (fs.existsSync(projectName)) {
-    // Show command-style header for directory removal
     console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
     console.log(`${colors.cyan}$${colors.reset} ${colors.bold}Removing local directory${colors.reset}`);
     console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
