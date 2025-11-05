@@ -39,7 +39,10 @@ export async function destroyProject({ projectName, owner }: IDestroyArgs): Prom
   }
 
   if (fs.existsSync(projectName)) {
-    // Show verification message before confirmation prompt
+    // Show command-style header for directory removal
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    console.log(`${colors.cyan}$${colors.reset} ${colors.bold}Removing local directory${colors.reset}`);
+    console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
     console.log(`✓ Found directory "${projectName}"`);
     const shouldRemove = await confirm(`Directory "${projectName}" exists, do you want to remove it?`);
     if (shouldRemove) {
