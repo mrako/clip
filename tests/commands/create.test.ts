@@ -3,7 +3,7 @@ import { createProject } from '../../src/commands/create.js';
 import { runCommand } from '../../src/utils/helpers.js';
 
 jest.mock('../../src/utils/config.js', () => ({
-  getCliveConfig: jest.fn().mockReturnValue({})
+  getClipConfig: jest.fn().mockReturnValue({})
 }));
 
 jest.mock('../../src/utils/helpers.js', () => ({
@@ -11,7 +11,7 @@ jest.mock('../../src/utils/helpers.js', () => ({
 }));
 
 jest.mock('child_process', () => ({
-  execSync: jest.fn().mockReturnValue('git@github.com:mrako/clive.git')
+  execSync: jest.fn().mockReturnValue('git@github.com:mrako/clip.git')
 }));
 
 describe('Create Command', () => {
