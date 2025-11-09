@@ -29,7 +29,7 @@ function getRepoName(options = {}) {
 export async function createProject({ projectName, template, private: isPrivate }: ICreateArgs): Promise<string> {
   const visibilityFlag = isPrivate ? '--private' : '--public';
   runCommand(`gh repo create ${projectName} --template ${template} ${visibilityFlag}`);
-  runCommand(`gh repo clone ${projectName}`);
+  runCommand(`gh repo clone ${projectName}`, { continueOnError: true });
 
   return getRepoName({ cwd: `./${projectName}` });
 }
