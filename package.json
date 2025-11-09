@@ -1,11 +1,11 @@
 {
   "type": "module",
-  "name": "@mrako/clive",
+  "name": "@mrako/clip",
   "version": "10.0.1",
   "main": "dist/index.js",
   "bin": {
-    "@mrako/clive": "./dist/index.js",
-    "clive": "./dist/index.js"
+    "@mrako/clip": "./dist/index.js",
+    "clip": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc && chmod +x ./dist/index.js",

@@ -11,11 +11,11 @@ npm link
 ## Usage
 
 ```bash
-clive [command]
+clip [command]
 
 Commands:
-  clive create <projectName>  Create a new project with GitHub template
-  clive destroy <projectName>  Destroy a project and its deployment
+  clip create <projectName>  Create a new project with GitHub template
+  clip destroy <projectName>  Destroy a project and its deployment
 
 Options:
       --version   Show version number                                  [boolean]
