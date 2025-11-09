@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@mrako/clip",
-  "version": "10.0.1",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "bin": {
     "@mrako/clip": "./dist/index.js",
@@ -20,7 +20,15 @@
   ],
   "author": "Marko Klemetti",
   "license": "MIT",
-  "description": "",
+  "description": "Minimum Viable Platform Engineering - Create and manage projects with GitHub templates",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrako/clip.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrako/clip/issues"
+  },
+  "homepage": "https://github.com/mrako/clip#readme",
   "dependencies": {
     "axios": "^1.12.0",
     "dotenv": "^16.4.7",
