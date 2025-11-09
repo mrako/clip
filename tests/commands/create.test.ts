@@ -40,4 +40,31 @@ describe('Create Command', () => {
       'gh repo clone test-project'
     ]);
   });
+
+  it('should call gh repo create without continueOnError option', async () => {
+    await createProject({
+      _: [],
+      $0: 'test',
+      projectName: 'test-project',
+      template: 'test-template'
+    });
+
+    expect(mockRunCommand).toHaveBeenCalledWith(
+      'gh repo create test-project --template test-template --public'
+    );
+  });
+
+  it('should call gh repo clone with continueOnError option', async () => {
+    await createProject({
+      _: [],
+      $0: 'test',
+      projectName: 'test-project',
+      template: 'test-template'
+    });
+
+    expect(mockRunCommand).toHaveBeenCalledWith(
+      'gh repo clone test-project',
+      { continueOnError: true }
+    );
+  });
 });
