@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/mrako/clip/compare/v1.0.2...v1.0.3) (2025-11-10)
+
+
+### Bug Fixes
+
+* Add id token permissions to npm publish ([ad7ea20](https://github.com/mrako/clip/commit/ad7ea20954114db3ea53be67d730564f5b69afbf))
+
 ## [1.0.2](https://github.com/mrako/clip/compare/v1.0.1...v1.0.2) (2025-11-10)
 
 
