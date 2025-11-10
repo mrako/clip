@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/mrako/clip/compare/v1.0.1...v1.0.2) (2025-11-10)
+
+
+### Bug Fixes
+
+* Separate release and publish actions ([9fec4e9](https://github.com/mrako/clip/commit/9fec4e933fe58777c971d6ffd794132fcbf8450a))
+* Separate release and publish actions ([250e09e](https://github.com/mrako/clip/commit/250e09e2e1a4e9c98f96073bcdbac617b872ae6d))
+
 ## [1.0.1](https://github.com/mrako/clip/compare/v1.0.0...v1.0.1) (2025-11-10)
 
 
