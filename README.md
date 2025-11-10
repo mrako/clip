@@ -1,21 +1,14 @@
 # Minimum Viable Platform Engineering
 
 
-## Installation
-
-```bash
-npm install
-npm link
-```
-
 ## Usage
 
 ```bash
-clip [command]
+npx @mrako/clip [command]
 
 Commands:
-  clip create <projectName>  Create a new project with GitHub template
-  clip destroy <projectName>  Destroy a project and its deployment
+  npx @mrako/clip create <projectName>  Create a new project with GitHub template
+  npx @mrako/clip destroy <projectName>  Destroy a project and its deployment
 
 Options:
       --version   Show version number                                  [boolean]
@@ -24,3 +17,22 @@ Options:
   -p, --private   Create the repository as private                     [boolean]
   -h, --help      Show help                                            [boolean]
 ```
+
+## Development
+
+### Installation
+
+```bash
+npm install
+npm link
+```
+
+### Testing
+
+```bash
+npm test
+```
+
+### Publishing
+
+Publishing is automated using GitHub Actions and [Release Please](https://github.com/googleapis/release-please).
