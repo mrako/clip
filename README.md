@@ -35,4 +35,4 @@ npm test
 
 ### Publishing
 
-Publishing is automated using GitHub Actions. Push changes to trigger the workflow.
+Publishing is automated using GitHub Actions and [Release Please](https://github.com/googleapis/release-please).
