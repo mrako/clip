@@ -4,8 +4,7 @@
   "version": "1.0.2",
   "main": "dist/index.js",
   "bin": {
-    "@mrako/clip": "./dist/index.js",
-    "clip": "./dist/index.js"
+    "clip": "dist/index.js"
   },
   "scripts": {
     "build": "tsc && chmod +x ./dist/index.js",
@@ -23,7 +22,7 @@
   "description": "Minimum Viable Platform Engineering - Create and manage projects with GitHub templates",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mrako/clip.git"
+    "url": "git+https://github.com/mrako/clip.git"
   },
   "bugs": {
     "url": "https://github.com/mrako/clip/issues"
