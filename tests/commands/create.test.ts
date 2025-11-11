@@ -11,7 +11,7 @@ jest.mock('../../src/utils/helpers.js', () => ({
 }));
 
 jest.mock('child_process', () => ({
-  execSync: jest.fn().mockReturnValue('git@github.com:mrako/clip.git')
+  execSync: jest.fn().mockReturnValue('test-user')
 }));
 
 describe('Create Command', () => {
@@ -66,5 +66,16 @@ describe('Create Command', () => {
       'gh repo clone test-project',
       { continueOnError: true }
     );
+  });
+
+  it('should return the correct repo name in username/projectName format', async () => {
+    const repoName = await createProject({
+      _: [],
+      $0: 'test',
+      projectName: 'test-project',
+      template: 'test-template'
+    });
+
+    expect(repoName).toBe('test-user/test-project');
   });
 });
