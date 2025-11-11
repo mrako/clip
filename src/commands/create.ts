@@ -11,17 +11,12 @@ export interface ICreateArgs {
   private?: boolean;
 }
 
-function getRepoName(options = {}) {
+function getRepoName(projectName: string): string {
   try {
-    const remoteUrl = execSync('git config --get remote.origin.url', { ...options }).toString().trim();
-    const repoMatch = remoteUrl.match(/github\.com[:/](.+\/.+)\.git$/);
-    if (repoMatch) {
-      return repoMatch[1]; // Returns 'username/repository'
-    } else {
-      throw new Error('Not a GitHub repository or invalid remote URL');
-    }
+    const username = execSync('gh api user -q .login').toString().trim();
+    return `${username}/${projectName}`;
   } catch (error) {
-    console.error('Error retrieving repository name:', (error as Error).message);
+    console.error('Error retrieving GitHub username:', (error as Error).message);
     process.exit(1);
   }
 }
@@ -31,5 +26,5 @@ export async function createProject({ projectName, template, private: isPrivate 
   runCommand(`gh repo create ${projectName} --template ${template} ${visibilityFlag}`);
   runCommand(`gh repo clone ${projectName}`, { continueOnError: true });
 
-  return getRepoName({ cwd: `./${projectName}` });
+  return getRepoName(projectName);
 }
