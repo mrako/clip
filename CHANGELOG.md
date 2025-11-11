@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.4](https://github.com/mrako/clip/compare/v1.0.3...v1.0.4) (2025-11-11)
+
+
+### Bug Fixes
+
+* Fix package duplications ([19ceea9](https://github.com/mrako/clip/commit/19ceea91be75692c3fb06334d1474978b47e8a87))
+* Remove provenance flag ([145aff0](https://github.com/mrako/clip/commit/145aff017876e89fdc33c280b2d3fcc3b0aeb6d5))
+* Revert to token-based publishing for troubleshooting ([17bce95](https://github.com/mrako/clip/commit/17bce95f9afc175329cde2467b8264106b8c7521))
+* update npm publishing ([3cdd51f](https://github.com/mrako/clip/commit/3cdd51f6acde4b6ae944dda184a3834eb7ed9a0d))
+
 ## [1.0.3](https://github.com/mrako/clip/compare/v1.0.2...v1.0.3) (2025-11-10)
 
 
