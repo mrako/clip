@@ -18,6 +18,16 @@ Options:
   -h, --help      Show help                                            [boolean]
 ```
 
+## Environment Variables
+
+Configure the following environment variables in a `.env` file in your working directory or export them in your shell:
+
+```bash
+VERCEL_API_TOKEN=
+VERCEL_SCOPE=
+ENDPOINT=
+```
+
 ## Development
 
 ### Installation
