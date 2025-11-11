@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.5](https://github.com/mrako/clip/compare/v1.0.4...v1.0.5) (2025-11-11)
+
+
+### Bug Fixes
+
+* Add .env example ([5cffbff](https://github.com/mrako/clip/commit/5cffbff536b429fe1a2641efc93b2b5d3cec010b))
+* Update readme and add instructions for copilot ([dd0852c](https://github.com/mrako/clip/commit/dd0852cf97ac27ac05c753839def3635ab660913))
+
 ## [1.0.4](https://github.com/mrako/clip/compare/v1.0.3...v1.0.4) (2025-11-11)
 
 

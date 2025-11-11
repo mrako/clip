@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@mrako/clip",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "bin": {
     "clip": "dist/index.js"
